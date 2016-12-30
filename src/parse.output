@@ -1,0 +1,135 @@
+State 10 conflicts: 1 shift/reduce
+
+
+Grammar
+
+    0 $accept: program $end
+
+    1 program: lines
+
+    2 lines: lines line
+    3      | line
+
+    4 line: expression '\n'
+
+    5 expression: INTEGER
+    6           | expression PLUS expression
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'\n' (10) 4
+error (256)
+INTEGER (258) 5
+PLUS (259) 6
+
+
+Nonterminals, with rules where they appear
+
+$accept (6)
+    on left: 0
+program (7)
+    on left: 1, on right: 0
+lines (8)
+    on left: 2 3, on right: 1 2
+line (9)
+    on left: 4, on right: 2 3
+expression (10)
+    on left: 5 6, on right: 4 6
+
+
+state 0
+
+    0 $accept: . program $end
+
+    INTEGER  shift, and go to state 1
+
+    program     go to state 2
+    lines       go to state 3
+    line        go to state 4
+    expression  go to state 5
+
+
+state 1
+
+    5 expression: INTEGER .
+
+    $default  reduce using rule 5 (expression)
+
+
+state 2
+
+    0 $accept: program . $end
+
+    $end  shift, and go to state 6
+
+
+state 3
+
+    1 program: lines .
+    2 lines: lines . line
+
+    INTEGER  shift, and go to state 1
+
+    $default  reduce using rule 1 (program)
+
+    line        go to state 7
+    expression  go to state 5
+
+
+state 4
+
+    3 lines: line .
+
+    $default  reduce using rule 3 (lines)
+
+
+state 5
+
+    4 line: expression . '\n'
+    6 expression: expression . PLUS expression
+
+    PLUS  shift, and go to state 8
+    '\n'  shift, and go to state 9
+
+
+state 6
+
+    0 $accept: program $end .
+
+    $default  accept
+
+
+state 7
+
+    2 lines: lines line .
+
+    $default  reduce using rule 2 (lines)
+
+
+state 8
+
+    6 expression: expression PLUS . expression
+
+    INTEGER  shift, and go to state 1
+
+    expression  go to state 10
+
+
+state 9
+
+    4 line: expression '\n' .
+
+    $default  reduce using rule 4 (line)
+
+
+state 10
+
+    6 expression: expression . PLUS expression
+    6           | expression PLUS expression .
+
+    PLUS  shift, and go to state 8
+
+    PLUS      [reduce using rule 6 (expression)]
+    $default  reduce using rule 6 (expression)

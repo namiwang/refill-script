@@ -1,14 +1,11 @@
 module Refill
   class Translator
-    def initialize
-      @opts = {
-        output_file_path: './output.js'
-      }
-
-      @output_file = File.open @opts[:output_file_path], 'w'
+    def initialize output: 
+      @output = output
     end
 
     def translate node
+      # TODO logger
       puts "translating node #{node.class}"
 
       case node
@@ -27,7 +24,7 @@ module Refill
         when AST::Expressions
           translate_and_write_expressions e
         when AST::Expression
-          @output_file.write "#{translate_expression e}\n"
+          @output.write "#{translate_expression e}\n"
         else
           raise 'UnknownExpressions'
         end

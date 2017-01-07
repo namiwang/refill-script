@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+# require 'thor'
+
+# class RefillExecutor < Thor
+# end
+
+# RefillExecutor.start
+
+require 'refill'
+
+Refill::Compiler.new.compile('test.refill')

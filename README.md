@@ -1,2 +1,2 @@
 # refill-script
-Another cup of coffeescript
+Another cup of coffee-script

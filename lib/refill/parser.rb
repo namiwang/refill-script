@@ -23,6 +23,8 @@ module Refill
       clause('expression OP_PLUS expression') { |e0, _, e1| AST::Addition.new e0, e1 }
     end
 
-    finalize(use: 'refill.table')
+    finalize
+    # TODO optimize via table
+    # finalize(use: 'refill.table')
   end
 end

@@ -18,6 +18,7 @@ module Refill
 
     production :expression do
       clause('INTEGER') { |i| AST::Integer.new i }
+      clause('LITERAL') { |l| AST::Literal.new l }
 
       clause('expression OP_PLUS expression') { |e0, _, e1| AST::Addition.new e0, e1 }
     end

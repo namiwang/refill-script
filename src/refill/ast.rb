@@ -13,6 +13,10 @@ module Refill
       value :value, ::Integer
     end
 
+    class Literal < Expression
+      value :value, ::String
+    end
+
     class BinaryExpr < Expression
       child :left, Expression
       child :right, Expression

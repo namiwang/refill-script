@@ -2,7 +2,9 @@ require 'rltk/lexer'
 
 module Refill
   class Lexer < RLTK::Lexer
-    rule(/\n/) { :DELI_LINE }
+    rule(/\n/) {
+      :DELI_LINE
+    }
 
     # whitespace
     rule(/\ /)
@@ -12,6 +14,13 @@ module Refill
     # rule(/=/)  { :OP_ASSIGN }
 
     # rule(/\(/) { :BR_PAREN_L }
+
+    rule(/[1-9][0-9]*/) { |t| [:INTEGER, t.to_i] }
+
+    # string literal
+    rule(/"/) { push_state :string }
+    rule(/[^"]*/, :string) { |t| [:LITERAL, t.to_s] }
+    rule(/"/, :string) { pop_state }
 
     rule(/[1-9][0-9]*/) { |t| [:INTEGER, t.to_i] }
 

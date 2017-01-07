@@ -13,19 +13,23 @@ module Refill
 
       case node
       when AST::Expressions
-        translate_expressions node
+        translate_and_write_expressions node
+      else
+        raise 'UnknownNode'
       end
     end
 
     private
 
-    def translate_expressions expressions
+    def translate_and_write_expressions expressions
       expressions.expressions.each do |e|
         case e
         when AST::Expressions
-          translate_expressions e
+          translate_and_write_expressions e
         when AST::Expression
           @output_file.write "#{translate_expression e}\n"
+        else
+          raise 'UnknownExpressions'
         end
       end
     end
@@ -36,6 +40,10 @@ module Refill
         return "( #{translate_expression expression.left} + #{translate_expression expression.right} )"
       when AST::Integer
         return "( #{expression.value.to_s} )"
+      when AST::Literal
+        return "( \"#{expression.value.to_s}\" )"
+      else
+        raise 'UnknownExpression'
       end
     end
 
